@@ -1,0 +1,34 @@
+Seccion 1: Citas de los Simpsons.
+
+En esta sección, el usuario cuenta con la posibilidad de obtener citas de Los Simpsons. Hay dos maneras:
+
+- Primero, haciendo clic en el botón correspondiente sin ingresar ningún nombre en el input. Esto devuelve una cita al azar.
+- Segundo, si se ingresa el nombre de un personaje antes de presionar el botón, la API devuelve una cita de ese personaje.
+
+Por otra parte, si se ingresa un valor numérico, se muestra un mensaje de error. La funcionalidad está implementada con Redux Toolkit usando thunk para el request a la API.
+
+Deberás escribir los tests de esta sección. Para ello deberás:
+
+* Crear un custom render agregando el provider de Redux para poder disparar las acciones.
+* Utilizar MSW o alguna otra librería para interceptar los request y mockear una respuesta. No se permite mockear el método fetch.
+* Desarrollar test de integración sobre el componente “Quotes”, evaluando los distintos test cases que contemplen los distintos flujos de comportamiento.
+
+El código base de esta sección se encuentra dentro de src/features/quotes. Allí encontrarás el componente y demás utilidades a tener en cuenta para escribir los tests.
+
+Seccion 2: Bio.
+
+En esta parte se presenta una sección que tiene una botonera que permite alternar entre la biografía de cada personaje. En este caso, lo que pretendemos es maquetar la sección usando Styled Components.
+
+Además, para el caso de los botones, se requiere aplicar estilos basados en props para poder resaltar el botón del personaje cuya bio se está mostrando en la pantalla.
+
+El código base para trabajar en esta sección se encuentra en src/features/bio. El componente se encuentra funcionando según lo esperado, por lo que es importante verificar que dicha funcionalidad no haya sido afectada luego de la refactorización.
+
+Seccion 3: Noticias.
+
+Esta sección presenta un listado de noticias acerca de Los Simpsons. Cada noticia tiene una prop esPremium que determina si el usuario puede acceder a la misma o no.
+
+Si puede, al hacer clic en el botón “Ver más” se abre un modal con el detalle completo de la noticia.
+Si no, se abre un modal que invita al usuario a suscribirse.
+
+El código base de esta sección se encuentra dentro de la carpeta src/features/news. Allí encontrarás el archivo Noticias.jsx, dentro del cual puede verse que hay múltiples componentes y funciones que realizan tareas sobre la información. En este caso, el requerimiento consiste en refactorizar el código aplicando los principios y buenas prácticas que hemos visto a lo largo de la cursada. En especial, se espera que puedas aplicar los principios SOLID durante el proceso de refactorización. A tal fin, está permitido crear nuevos archivos dentro de la carpeta “news”, en caso de que lo consideres necesario para extraer cierta lógica del código. Sin embargo, debe tenerse en cuenta que solo debe trabajarse sobre el archivo Noticias.jsx. No deberá modificarse el contenido de los archivos fakeRest.ts y styled.ts, ya que ello no forma parte de la consigna.
+
