@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NombresSimpsons, INFO_SIMPSONS } from "./constants";
 import styles from "./styles.module.css";
+import { StyledBioContainer, StyledBioDescription, StyledBioImage, StyledBioName, StyledContainerButtons } from "./Bio.style";
 
 const Bio = () => {
   const [bioActiva, setBioActiva] = useState(
@@ -27,22 +28,21 @@ const Bio = () => {
   };
 
   return (
-    <div className={styles.bioContainer}>
-      <div className={styles.contenedorBotones}>{crearBotones()}</div>
+    <StyledBioContainer>
+      <StyledContainerButtons>{crearBotones()}</StyledContainerButtons>
       <div>
         <div>
-          <img
+          <StyledBioImage
             src={bioActiva.image}
             alt={bioActiva.nombre}
-            className={styles.bioImagen}
           />
         </div>
         <div>
-          <h3 className={styles.bioNombre}>{bioActiva.nombre}</h3>
-          <p className={styles.bioDescripcion}>{bioActiva.descripcion}</p>
+          <StyledBioName>{bioActiva.nombre}</StyledBioName>
+          <StyledBioDescription>{bioActiva.descripcion}</StyledBioDescription>
         </div>
       </div>
-    </div>
+    </StyledBioContainer>
   );
 };
 
