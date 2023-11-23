@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { NombresSimpsons, INFO_SIMPSONS } from "./constants";
-import styles from "./styles.module.css";
 import { StyledBioButton, StyledBioContainer, StyledBioDescription, StyledBioImage, StyledBioName, StyledContainerButtons } from "./Bio.style";
 
 const Bio = () => {
