@@ -1,20 +1,13 @@
 import { MouseEventHandler, useState } from "react";
-import { SuscribeImage, CloseButton as Close } from "../../assets";
 import {
-  CloseButton,
-  TarjetaModal,
-  ContenedorModal,
-  DescripcionModal,
-  ImagenModal,
-  TituloModal,
   ContenedorNoticias,
   ListaNoticias,
   TituloNoticias,
-  BotonSuscribir,
-  CotenedorTexto,
 } from "./styled";
-import useGetInformation from "./getInformation";
+import useGetInformation from "./useGetInformation";
 import NoticiaCard from "./NoticiaCard"
+import NoticiasModalPremium from "./NoticiasModalPremium";
+import NoticiasModal from "./NoticiasModal";
 
 export interface INoticiasNormalizadas {
   id: number;
@@ -36,7 +29,6 @@ const Noticias = () => {
       <TituloNoticias>Noticias de los Simpsons</TituloNoticias>
       <ListaNoticias>
         {noticias.map((n) => (
-
           <NoticiaCard
             key={n.id}
             id={n.id}
@@ -48,48 +40,27 @@ const Noticias = () => {
             descripcionCorta={n.descripcionCorta}
             onclick={() => setModal(n)}
           />
-
         ))}
         {modal ? (
           modal.esPremium ? (
-            <ContenedorModal>
-              <TarjetaModal>
-                <CloseButton onClick={() => setModal(null)}>
-                  <img src={Close} alt="close-button" />
-                </CloseButton>
-                <ImagenModal src={SuscribeImage} alt="mr-burns-excelent" />
-                <CotenedorTexto>
-                  <TituloModal>Suscríbete a nuestro Newsletter</TituloModal>
-                  <DescripcionModal>
-                    Suscríbete a nuestro newsletter y recibe noticias de
-                    nuestros personajes favoritos.
-                  </DescripcionModal>
-                  <BotonSuscribir
-                    onClick={() =>
-                      setTimeout(() => {
-                        alert("Suscripto!");
-                        setModal(null);
-                      }, 1000)
-                    }
-                  >
-                    Suscríbete
-                  </BotonSuscribir>
-                </CotenedorTexto>
-              </TarjetaModal>
-            </ContenedorModal>
+            
+            <NoticiasModalPremium
+              onclickClose= {() => setModal(null)}
+              onclickSubscribe={() =>
+                setTimeout(() => {
+                  alert("Suscripto!");
+                  setModal(null);
+                }, 1000)
+              }
+            />
+
           ) : (
-            <ContenedorModal>
-              <TarjetaModal>
-                <CloseButton onClick={() => setModal(null)}>
-                  <img src={Close} alt="close-button" />
-                </CloseButton>
-                <ImagenModal src={modal.imagen} alt="news-image" />
-                <CotenedorTexto>
-                  <TituloModal>{modal.titulo}</TituloModal>
-                  <DescripcionModal>{modal.descripcion}</DescripcionModal>
-                </CotenedorTexto>
-              </TarjetaModal>
-            </ContenedorModal>
+            <NoticiasModal 
+              onclickModal={() => setModal(null)}
+              imagen = {modal.imagen}
+              titulo ={modal.titulo}
+              descripcion={modal.descripcion}
+            />
           )
         ) : null}
       </ListaNoticias>
