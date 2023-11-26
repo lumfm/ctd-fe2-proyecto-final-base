@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import { SuscribeImage, CloseButton as Close } from "../../assets";
-import { obtenerNoticias } from "./fakeRest";
 import {
   CloseButton,
   TarjetaModal,
@@ -8,18 +7,14 @@ import {
   DescripcionModal,
   ImagenModal,
   TituloModal,
-  TarjetaNoticia,
-  FechaTarjetaNoticia,
-  DescripcionTarjetaNoticia,
-  ImagenTarjetaNoticia,
-  TituloTarjetaNoticia,
   ContenedorNoticias,
   ListaNoticias,
   TituloNoticias,
-  BotonLectura,
   BotonSuscribir,
   CotenedorTexto,
 } from "./styled";
+import useGetInformation from "./getInformation";
+import NoticiaCard from "./NoticiaCard"
 
 export interface INoticiasNormalizadas {
   id: number;
@@ -29,60 +24,31 @@ export interface INoticiasNormalizadas {
   esPremium: boolean;
   imagen: string;
   descripcionCorta?: string;
+  onclick?: MouseEventHandler;
 }
 
 const Noticias = () => {
-  const [noticias, setNoticias] = useState<INoticiasNormalizadas[]>([]);
   const [modal, setModal] = useState<INoticiasNormalizadas | null>(null);
-
-  useEffect(() => {
-    const obtenerInformacion = async () => {
-      const respuesta = await obtenerNoticias();
-
-      const data = respuesta.map((n) => {
-        const titulo = n.titulo
-          .split(" ")
-          .map((str) => {
-            return str.charAt(0).toUpperCase() + str.slice(1);
-          })
-          .join(" ");
-
-        const ahora = new Date();
-        const minutosTranscurridos = Math.floor(
-          (ahora.getTime() - n.fecha.getTime()) / 60000
-        );
-
-        return {
-          id: n.id,
-          titulo,
-          descripcion: n.descripcion,
-          fecha: `Hace ${minutosTranscurridos} minutos`,
-          esPremium: n.esPremium,
-          imagen: n.imagen,
-          descripcionCorta: n.descripcion.substring(0, 100),
-        };
-      });
-
-      setNoticias(data);
-    };
-
-    obtenerInformacion();
-  }, []);
+  const noticias = useGetInformation();
 
   return (
     <ContenedorNoticias>
       <TituloNoticias>Noticias de los Simpsons</TituloNoticias>
       <ListaNoticias>
         {noticias.map((n) => (
-          <TarjetaNoticia>
-            <ImagenTarjetaNoticia src={n.imagen} />
-            <TituloTarjetaNoticia>{n.titulo}</TituloTarjetaNoticia>
-            <FechaTarjetaNoticia>{n.fecha}</FechaTarjetaNoticia>
-            <DescripcionTarjetaNoticia>
-              {n.descripcionCorta}
-            </DescripcionTarjetaNoticia>
-            <BotonLectura onClick={() => setModal(n)}>Ver más</BotonLectura>
-          </TarjetaNoticia>
+
+          <NoticiaCard
+            key={n.id}
+            id={n.id}
+            titulo={n.titulo}
+            descripcion={n.descripcion}
+            fecha={n.fecha}
+            esPremium={n.esPremium}
+            imagen={n.imagen}
+            descripcionCorta={n.descripcionCorta}
+            onclick={() => setModal(n)}
+          />
+
         ))}
         {modal ? (
           modal.esPremium ? (
